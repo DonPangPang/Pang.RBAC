@@ -1,0 +1,28 @@
+@host = http://localhost:5000
+@conType = Content-Type:application/json
+
+
+###---------------- User ----------------###
+
+### 添加用户
+POST {{host}}/User/CreateUser HTTP/1.1
+{{conType}}
+
+{
+    "username" : "admin",
+    "password" : "admin"
+}
+
+### 获取所有用户
+GET {{host}}/User/GetAllUsers HTTP/1.1
+{{conType}}
+
+### 获取某个用户
+@userId = 4a35bbac-49a2-418a-9758-1949e8c732ed
+
+GET {{host}}/User/GetUserById/{{userId}} HTTP/1.1
+{{conType}}
+
+### 删除某个用户
+DELETE {{host}}/User/DeleteUser/{{userId}} HTTP/1.1
+{{conType}}
