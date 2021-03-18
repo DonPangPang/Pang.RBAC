@@ -9,7 +9,7 @@ using Pang.RBAC.Api.Data;
 namespace Pang.RBAC.Api.Migrations
 {
     [DbContext(typeof(PangDbContext))]
-    [Migration("20210318031613_add-rbac")]
+    [Migration("20210318093151_add-rbac")]
     partial class addrbac
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -248,6 +248,9 @@ namespace Pang.RBAC.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsSuper")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
@@ -257,6 +260,15 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            IsSuper = true,
+                            Password = "admin",
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.UserGroup", b =>

@@ -7,6 +7,7 @@ using Pang.RBAC.Api.Entities;
 using Pang.RBAC.Api.Repository;
 using Pang.RBAC.Api.DtoParameters;
 using Pang.RBAC.Api.Controllers.Base;
+using System.Linq;
 
 namespace Pang.RBAC.Api.Controllers
 {
@@ -106,12 +107,22 @@ namespace Pang.RBAC.Api.Controllers
 
         #endregion
 
-        // [HttpGet]
-        // [Route("{id}")]
-        // public async Task<IActionResult> GetRole(Guid id)
-        // {
-        //     return Ok();
-        // }
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetRoles(Guid id)
+        {
+            if(id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var userRoleAsses = await _userRoleAssRepository.GetRoles(id);
+            var roleIds = userRoleAsses.Select(x=>x.RoleId).ToList();
+
+            var roles = _roleRepository.GetEntitiesCollectionAsync(roleIds);
+
+            return Ok(roles);
+        }
 
     }
 }

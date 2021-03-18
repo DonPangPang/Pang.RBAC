@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj": {}
+    "F:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj": {}
   },
   "projects": {
-    "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj": {
+    "F:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
+        "projectUniqueName": "F:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
         "projectName": "Pang.RBAC.Api",
-        "projectPath": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
+        "projectPath": "F:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
         "packagesPath": "C:\\Users\\pm011\\.nuget\\packages\\",
-        "outputPath": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\obj\\",
+        "outputPath": "F:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pm011\\AppData\\Roaming\\NuGet\\NuGet.Config",

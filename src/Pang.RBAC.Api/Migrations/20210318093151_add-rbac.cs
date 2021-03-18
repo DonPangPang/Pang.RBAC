@@ -104,7 +104,8 @@ namespace Pang.RBAC.Api.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Username = table.Column<string>(type: "TEXT", nullable: true),
-                    Password = table.Column<string>(type: "TEXT", nullable: true)
+                    Password = table.Column<string>(type: "TEXT", nullable: true),
+                    IsSuper = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -298,6 +299,11 @@ namespace Pang.RBAC.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "Id", "IsSuper", "Password", "Username" },
+                values: new object[] { new Guid("3fa85f64-5717-4562-f3fc-2c963f66afa6"), true, "admin", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionFileResourceAss_FileResourceId",

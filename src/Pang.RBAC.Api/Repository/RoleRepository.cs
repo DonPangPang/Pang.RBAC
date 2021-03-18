@@ -6,8 +6,11 @@ namespace Pang.RBAC.Api.Repository
 {
     public class RoleRepository : RepositoryBase<Role>
     {
+
+        private readonly PangDbContext _context;
         public RoleRepository(PangDbContext context) : base(context)
         {
+            _context = context ?? throw new System.ArgumentNullException(nameof(context));
         }
     }
 }

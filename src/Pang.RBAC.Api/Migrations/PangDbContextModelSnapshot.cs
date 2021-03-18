@@ -246,6 +246,9 @@ namespace Pang.RBAC.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsSuper")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
@@ -255,6 +258,15 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            IsSuper = true,
+                            Password = "admin",
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.UserGroup", b =>

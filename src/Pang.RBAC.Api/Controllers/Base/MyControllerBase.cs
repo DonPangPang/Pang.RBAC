@@ -9,7 +9,8 @@ using Pang.RBAC.Api.Repository.Base;
 
 namespace Pang.RBAC.Api.Controllers.Base
 {
-    public class MyControllerBase<TRepository, TEntity> : ControllerBase where TRepository : RepositoryBase<TEntity> where TEntity : Entity
+    public class MyControllerBase<TRepository, TEntity> : ControllerBase 
+                where TRepository : RepositoryBase<TEntity> where TEntity : Entity
     {
         private TRepository _repository;
         public MyControllerBase(RepositoryBase<TEntity> repository)
