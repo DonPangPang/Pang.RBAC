@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Iae3gNu/P9YaSkRomPWSAs4kC6zNPf5KiFxRm7a00jsbxRo8a5RRz6v+z58kdEq7OefPl94znOO1HwRsulNm8A==",
+  "dgSpecHash": "nNGmUHQic3At6/FG7IvBBrtjeoLUIGPGZw8Uhi4Wajtf6ekX+qshiPgp75L8B5V3mQn+O0jLaknDVtgrm6S4AA==",
   "success": true,
-  "projectFilePath": "F:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
+  "projectFilePath": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pm011\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\pm011\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
