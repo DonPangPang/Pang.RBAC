@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.DtoParameters.Base;
 using Pang.RBAC.Api.Entities;
@@ -10,16 +9,13 @@ using Pang.RBAC.Api.Repository.Base;
 
 namespace Pang.RBAC.Api.Controllers.Base
 {
-    public class MyControllerBase<TRepository, TEntity, TModel> : ControllerBase
+    public class MyControllerBase<TRepository, TEntity> : ControllerBase 
                 where TRepository : RepositoryBase<TEntity> where TEntity : Entity
     {
-        private readonly TRepository _repository;
-        private readonly IMapper _mapper;
-
-        public MyControllerBase(RepositoryBase<TEntity> repository, IMapper mapper)
+        private TRepository _repository;
+        public MyControllerBase(RepositoryBase<TEntity> repository)
         {
             _repository = (TRepository)(repository ?? throw new ArgumentNullException(nameof(repository)));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
@@ -27,13 +23,11 @@ namespace Pang.RBAC.Api.Controllers.Base
         {
             var data = await _repository.GetEntitiesAsync();
 
-            var returnDto = _mapper.Map<IEnumerable<TModel>>(data);
-
-            return Ok(returnDto);
+            return Ok(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEntitiesByPagedAsync([FromQuery] DtoParametersBase parameters)
+        public async Task<IActionResult> GetEntitiesByPagedAsync([FromQuery]DtoParametersBase parameters)
         {
             if (parameters is null)
             {
@@ -41,10 +35,9 @@ namespace Pang.RBAC.Api.Controllers.Base
             }
 
             var data = await _repository.GetEntitiesAsync(parameters);
-            var returnDto = _mapper.Map<IEnumerable<TModel>>(data);
 
             // HACK: UserController 添加Links
-            return Ok(returnDto);
+            return Ok(data);
         }
 
         [HttpGet]
@@ -52,10 +45,7 @@ namespace Pang.RBAC.Api.Controllers.Base
         public async Task<IActionResult> GetEntityByIdAsync(Guid id)
         {
             var data = await _repository.GetEntityByIdAsync(id);
-
-            var returnDto = _mapper.Map<IEnumerable<TModel>>(data);
-
-            return Ok(returnDto);
+            return Ok(data);
         }
 
         [HttpGet]
@@ -64,72 +54,36 @@ namespace Pang.RBAC.Api.Controllers.Base
         {
             var entities = await _repository.GetEntitiesCollectionAsync(ids);
 
-            if (ids.Count() != entities.Count())
+            if(ids.Count() != entities.Count())
             {
                 return NotFound();
             }
 
-            var returnDto = _mapper.Map<IEnumerable<TModel>>(entities);
-
-            return Ok(returnDto);
+            return Ok(entities);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEntityAsync([FromBody] TModel entity)
+        public async Task<IActionResult> CreateEntityAsync([FromBody] TEntity entity)
         {
             if (entity is null)
-            {
-                return BadRequest();
-            }
-
-            var data = _mapper.Map<TEntity>(entity);
-
-            _repository.AddEntity(data);
-            await _repository.SaveAsync();
-
-            var returnDto = _mapper.Map<TModel>(data);
-
-            return Ok(returnDto);
-        }
-
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> UpdateEntityAsync(Guid id, [FromBody] TModel entity)
-        {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            if (entity is null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (!await _repository.EntityExistsAsync(id))
             {
                 return NotFound();
             }
 
-            var oldEntity = await _repository.GetEntityByIdAsync(id);
+            _repository.AddEntity(entity);
+            await _repository.SaveAsync();
 
-            if (oldEntity is null)
-            {
-                var addEntity = _mapper.Map<TEntity>(entity);
-                addEntity.Id = id;
+            return NoContent();
+        }
 
-                _repository.AddEntity(addEntity);
-
-                await _repository.SaveAsync();
-
-                var dtoToReturn = _mapper.Map<TModel>(addEntity);
-
-                return Ok(dtoToReturn);
+        [HttpPut]
+        public async Task<IActionResult> UpdateEntityAsync([FromBody] TEntity entity)
+        {
+            if(entity is null){
+                throw new ArgumentNullException(nameof(entity));
             }
 
-            _mapper.Map(entity, oldEntity);
-
-            _repository.UpdateEntity(oldEntity);
+            _repository.UpdateEntity(entity);
             await _repository.SaveAsync();
 
             return NoContent();
@@ -146,7 +100,7 @@ namespace Pang.RBAC.Api.Controllers.Base
 
             if (!await _repository.EntityExistsAsync(id))
             {
-                return NotFound();
+                return BadRequest();
             }
 
             _repository.DeleteById(id);

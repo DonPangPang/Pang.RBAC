@@ -11,7 +11,5 @@ namespace Pang.RBAC.Api.Entities
         /// </summary>
         /// <value></value>
         public string Code{get; set;}
-
-        public PermissionPageElementAss PermissionPageElementAss{get; set;}
     }
 }

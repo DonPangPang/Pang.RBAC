@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.Controllers.Base;
 using Pang.RBAC.Api.Entities;
-using Pang.RBAC.Api.Models;
 using Pang.RBAC.Api.Repository;
 using Pang.RBAC.Api.Repository.Base;
 
@@ -13,14 +10,12 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
-    public class UserGroupController : MyControllerBase<UserGroupRepository, UserGroup, UserGroupDto>
+    public class UserGroupController : MyControllerBase<UserGroupRepository, UserGroup>
     {
         private readonly UserGroupRepository _userGroupRepository;
-        private readonly IMapper _mapper;
-        public UserGroupController(UserGroupRepository repository, IMapper mapper) : base(repository, mapper)
+        public UserGroupController(UserGroupRepository repository) : base(repository)
         {
             _userGroupRepository = repository;
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
 
@@ -30,9 +25,7 @@ namespace Pang.RBAC.Api.Controllers
         {
             var childrens = await _userGroupRepository.GetChildrens(id);
 
-            var returnDtos = _mapper.Map<IEnumerable<UserGroup>>(childrens);
-
-            return Ok(returnDtos);
+            return Ok(childrens);
         }
     }
 }

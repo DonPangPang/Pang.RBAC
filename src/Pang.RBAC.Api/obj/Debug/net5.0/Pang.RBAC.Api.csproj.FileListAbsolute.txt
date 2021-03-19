@@ -68,5 +68,3 @@ F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\ref\Pang.RBAC.Api.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.pdb
 f:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.genruntimeconfig.cache
-F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\Npgsql.dll
-F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

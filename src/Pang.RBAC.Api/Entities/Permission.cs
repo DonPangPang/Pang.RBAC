@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System;
 namespace Pang.RBAC.Api.Entities
 {
@@ -12,11 +11,5 @@ namespace Pang.RBAC.Api.Entities
         /// </summary>
         /// <value></value>
         public string Name{get; set;}
-
-        public ICollection<RolePermissionAss> RolePermissionAsses{get; set;}
-        public ICollection<PermissionFunctionOperationAss> PermissionFunctionOperationAsses{get; set;}
-        public ICollection<PermissionMenuAss> PermissionMenuAsses{get; set;}
-        public ICollection<PermissionPageElementAss> PermissionPageElementAsses{get; set;}
-        public ICollection<PermissionFileResourceAss> permissionFileResourceAsses{get; set;}
     }
 }

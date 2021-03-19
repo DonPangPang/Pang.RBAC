@@ -25,15 +25,5 @@ namespace Pang.RBAC.Api.Repository
 
             return data;
         }
-
-        // public override void AddEntity(UserRoleAss eneity)
-        // {
-        //     var test = new UserRoleAss{
-        //         Id = eneity.Id
-        //     };
-        //     base.AddEntity(test);
-        //     _context.SaveChangesAsync();
-        //     base.UpdateEntity(eneity);
-        // }
     }
 }

@@ -16,7 +16,5 @@ namespace Pang.RBAC.Api.Entities
         /// </summary>
         /// <value></value>
         public string Url{get; set;} = null!;
-
-        public PermissionFileResourceAss PermissionFileResourceAss{get; set;}
     }
 }

@@ -8,19 +8,23 @@ using Pang.RBAC.Api.Repository;
 using Pang.RBAC.Api.DtoParameters;
 using Pang.RBAC.Api.Controllers.Base;
 using System.Linq;
-using Pang.RBAC.Api.Models;
-using AutoMapper;
 
 namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
-    public class UserController : MyControllerBase<UserRepository, User, UserDto>
+    public class UserController : MyControllerBase<UserRepository, User>
     {
         private readonly UserRepository _userRepository;
-        public UserController(UserRepository userRepository, IMapper mapper) : base(userRepository, mapper)
+        private readonly RoleRepository _roleRepository;
+        private readonly UserRoleAssRepository _userRoleAssRepository;
+        public UserController(UserRepository userRepository,
+                              RoleRepository roleRepository,
+                              UserRoleAssRepository userRoleAssRepository) : base(userRepository)
         {
             _userRepository = userRepository;
+            _roleRepository = roleRepository ?? throw new ArgumentNullException(nameof(roleRepository));
+            _userRoleAssRepository = userRoleAssRepository ?? throw new ArgumentNullException(nameof(userRoleAssRepository));
         }
 
         #region 丢弃
@@ -103,25 +107,22 @@ namespace Pang.RBAC.Api.Controllers
 
         #endregion
 
-        // [HttpGet]
-        // [Route("{id}")]
-        // public async Task<IActionResult> GetRoles(Guid id)
-        // {
-        //     if(id == Guid.Empty)
-        //     {
-        //         throw new ArgumentNullException(nameof(id));
-        //     }
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetRoles(Guid id)
+        {
+            if(id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-        //     var user = await _userRepository.GetEntitiesAsync();
-        //     var ros = user.Select(x=>x.UserRoleAsses.Select(y=>y.Role));
+            var userRoleAsses = await _userRoleAssRepository.GetRoles(id);
+            var roleIds = userRoleAsses.Select(x=>x.RoleId).ToList();
 
-        //     var userRoleAsses = await _userRoleAssRepository.GetRoles(id);
-        //     var roleIds = userRoleAsses.Select(x=>x.RoleId).ToList();
+            var roles = _roleRepository.GetEntitiesCollectionAsync(roleIds);
 
-        //     var roles = _roleRepository.GetEntitiesCollectionAsync(roleIds);
-
-        //     return Ok(roles);
-        // }
+            return Ok(roles);
+        }
 
     }
 }

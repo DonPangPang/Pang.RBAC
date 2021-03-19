@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pang.RBAC.Api.Migrations
 {
-    public partial class rbacsqlite : Migration
+    public partial class addrbac : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,6 +71,31 @@ namespace Pang.RBAC.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Permission", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleUserGroupAss",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserGroupId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    RoleId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleUserGroupAss", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,50 +226,6 @@ namespace Pang.RBAC.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    UserGroupId = table.Column<Guid>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Role_UserGroup_UserGroupId",
-                        column: x => x.UserGroupId,
-                        principalTable: "UserGroup",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserUserGroupAss",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserGroupId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserUserGroupAss", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserUserGroupAss_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserUserGroupAss_UserGroup_UserGroupId",
-                        column: x => x.UserGroupId,
-                        principalTable: "UserGroup",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RolePermissionAss",
                 columns: table => new
                 {
@@ -265,31 +246,6 @@ namespace Pang.RBAC.Api.Migrations
                         name: "FK_RolePermissionAss_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleUserGroupAss",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserGroupId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleUserGroupAss", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RoleUserGroupAss_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleUserGroupAss_UserGroup_UserGroupId",
-                        column: x => x.UserGroupId,
-                        principalTable: "UserGroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -319,10 +275,30 @@ namespace Pang.RBAC.Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Role",
-                columns: new[] { "Id", "Name", "UserGroupId" },
-                values: new object[] { new Guid("4fa85f64-5717-4562-f3fc-2c963f66afa6"), "admin", null });
+            migrationBuilder.CreateTable(
+                name: "UserUserGroupAss",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserGroupId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserUserGroupAss", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserUserGroupAss_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserUserGroupAss_UserGroup_UserGroupId",
+                        column: x => x.UserGroupId,
+                        principalTable: "UserGroup",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "User",
@@ -332,8 +308,7 @@ namespace Pang.RBAC.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionFileResourceAss_FileResourceId",
                 table: "PermissionFileResourceAss",
-                column: "FileResourceId",
-                unique: true);
+                column: "FileResourceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionFileResourceAss_PermissionId",
@@ -343,8 +318,7 @@ namespace Pang.RBAC.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionFunctionOperationAss_FunctionOperationId",
                 table: "PermissionFunctionOperationAss",
-                column: "FunctionOperationId",
-                unique: true);
+                column: "FunctionOperationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionFunctionOperationAss_PermissionId",
@@ -354,8 +328,7 @@ namespace Pang.RBAC.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionMenuAss_MenuId",
                 table: "PermissionMenuAss",
-                column: "MenuId",
-                unique: true);
+                column: "MenuId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionMenuAss_PermissionId",
@@ -365,18 +338,12 @@ namespace Pang.RBAC.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionPageElementAss_PageElementId",
                 table: "PermissionPageElementAss",
-                column: "PageElementId",
-                unique: true);
+                column: "PageElementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PermissionPageElementAss_PermissionId",
                 table: "PermissionPageElementAss",
                 column: "PermissionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Role_UserGroupId",
-                table: "Role",
-                column: "UserGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermissionAss_PermissionId",
@@ -387,16 +354,6 @@ namespace Pang.RBAC.Api.Migrations
                 name: "IX_RolePermissionAss_RoleId",
                 table: "RolePermissionAss",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleUserGroupAss_RoleId",
-                table: "RoleUserGroupAss",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleUserGroupAss_UserGroupId",
-                table: "RoleUserGroupAss",
-                column: "UserGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoleAss_RoleId",
@@ -416,8 +373,7 @@ namespace Pang.RBAC.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserUserGroupAss_UserId",
                 table: "UserUserGroupAss",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

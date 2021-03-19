@@ -9,8 +9,8 @@ using Pang.RBAC.Api.Data;
 namespace Pang.RBAC.Api.Migrations
 {
     [DbContext(typeof(PangDbContext))]
-    [Migration("20210319082516_rbac-sqlite")]
-    partial class rbacsqlite
+    [Migration("20210318093151_add-rbac")]
+    partial class addrbac
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,8 +120,7 @@ namespace Pang.RBAC.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FileResourceId")
-                        .IsUnique();
+                    b.HasIndex("FileResourceId");
 
                     b.HasIndex("PermissionId");
 
@@ -142,8 +141,7 @@ namespace Pang.RBAC.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FunctionOperationId")
-                        .IsUnique();
+                    b.HasIndex("FunctionOperationId");
 
                     b.HasIndex("PermissionId");
 
@@ -164,8 +162,7 @@ namespace Pang.RBAC.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuId")
-                        .IsUnique();
+                    b.HasIndex("MenuId");
 
                     b.HasIndex("PermissionId");
 
@@ -186,8 +183,7 @@ namespace Pang.RBAC.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PageElementId")
-                        .IsUnique();
+                    b.HasIndex("PageElementId");
 
                     b.HasIndex("PermissionId");
 
@@ -203,21 +199,9 @@ namespace Pang.RBAC.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("UserGroupId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserGroupId");
-
                     b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4fa85f64-5717-4562-f3fc-2c963f66afa6"),
-                            Name = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.RolePermissionAss", b =>
@@ -254,10 +238,6 @@ namespace Pang.RBAC.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserGroupId");
 
                     b.ToTable("RoleUserGroupAss");
                 });
@@ -345,8 +325,7 @@ namespace Pang.RBAC.Api.Migrations
 
                     b.HasIndex("UserGroupId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserUserGroupAss");
                 });
@@ -354,13 +333,13 @@ namespace Pang.RBAC.Api.Migrations
             modelBuilder.Entity("Pang.RBAC.Api.Entities.PermissionFileResourceAss", b =>
                 {
                     b.HasOne("Pang.RBAC.Api.Entities.FileResource", "FileResource")
-                        .WithOne("PermissionFileResourceAss")
-                        .HasForeignKey("Pang.RBAC.Api.Entities.PermissionFileResourceAss", "FileResourceId")
+                        .WithMany()
+                        .HasForeignKey("FileResourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pang.RBAC.Api.Entities.Permission", "Permission")
-                        .WithMany("permissionFileResourceAsses")
+                        .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -373,13 +352,13 @@ namespace Pang.RBAC.Api.Migrations
             modelBuilder.Entity("Pang.RBAC.Api.Entities.PermissionFunctionOperationAss", b =>
                 {
                     b.HasOne("Pang.RBAC.Api.Entities.FunctionOperation", "FunctionOperation")
-                        .WithOne("PermissionFunctionOperationAss")
-                        .HasForeignKey("Pang.RBAC.Api.Entities.PermissionFunctionOperationAss", "FunctionOperationId")
+                        .WithMany()
+                        .HasForeignKey("FunctionOperationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pang.RBAC.Api.Entities.Permission", "Permission")
-                        .WithMany("PermissionFunctionOperationAsses")
+                        .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -392,13 +371,13 @@ namespace Pang.RBAC.Api.Migrations
             modelBuilder.Entity("Pang.RBAC.Api.Entities.PermissionMenuAss", b =>
                 {
                     b.HasOne("Pang.RBAC.Api.Entities.Menu", "Menu")
-                        .WithOne("PermissionMenuAss")
-                        .HasForeignKey("Pang.RBAC.Api.Entities.PermissionMenuAss", "MenuId")
+                        .WithMany()
+                        .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pang.RBAC.Api.Entities.Permission", "Permission")
-                        .WithMany("PermissionMenuAsses")
+                        .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -410,42 +389,33 @@ namespace Pang.RBAC.Api.Migrations
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.PermissionPageElementAss", b =>
                 {
-                    b.HasOne("Pang.RBAC.Api.Entities.PageElement", "PageElement")
-                        .WithOne("PermissionPageElementAss")
-                        .HasForeignKey("Pang.RBAC.Api.Entities.PermissionPageElementAss", "PageElementId")
+                    b.HasOne("Pang.RBAC.Api.Entities.PageElement", "pageElement")
+                        .WithMany()
+                        .HasForeignKey("PageElementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pang.RBAC.Api.Entities.Permission", "Permission")
-                        .WithMany("PermissionPageElementAsses")
+                        .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PageElement");
+                    b.Navigation("pageElement");
 
                     b.Navigation("Permission");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.Role", b =>
-                {
-                    b.HasOne("Pang.RBAC.Api.Entities.UserGroup", "UserGroup")
-                        .WithMany()
-                        .HasForeignKey("UserGroupId");
-
-                    b.Navigation("UserGroup");
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.RolePermissionAss", b =>
                 {
                     b.HasOne("Pang.RBAC.Api.Entities.Permission", "Permission")
-                        .WithMany("RolePermissionAsses")
+                        .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pang.RBAC.Api.Entities.Role", "Role")
-                        .WithMany("RolePermissionAsses")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -455,7 +425,7 @@ namespace Pang.RBAC.Api.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.RoleUserGroupAss", b =>
+            modelBuilder.Entity("Pang.RBAC.Api.Entities.UserRoleAss", b =>
                 {
                     b.HasOne("Pang.RBAC.Api.Entities.Role", "Role")
                         .WithMany()
@@ -463,27 +433,8 @@ namespace Pang.RBAC.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Pang.RBAC.Api.Entities.UserGroup", "UserGroup")
-                        .WithMany("RoleUserGroupAsses")
-                        .HasForeignKey("UserGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("UserGroup");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.UserRoleAss", b =>
-                {
-                    b.HasOne("Pang.RBAC.Api.Entities.Role", "Role")
-                        .WithMany("UserRoleAsses")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Pang.RBAC.Api.Entities.User", "User")
-                        .WithMany("UserRoleAsses")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -496,74 +447,20 @@ namespace Pang.RBAC.Api.Migrations
             modelBuilder.Entity("Pang.RBAC.Api.Entities.UserUserGroupAss", b =>
                 {
                     b.HasOne("Pang.RBAC.Api.Entities.UserGroup", "UserGroup")
-                        .WithMany("UserUserGroupAsses")
+                        .WithMany()
                         .HasForeignKey("UserGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pang.RBAC.Api.Entities.User", "User")
-                        .WithOne("UserUserGroupAss")
-                        .HasForeignKey("Pang.RBAC.Api.Entities.UserUserGroupAss", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
 
                     b.Navigation("UserGroup");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.FileResource", b =>
-                {
-                    b.Navigation("PermissionFileResourceAss");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.FunctionOperation", b =>
-                {
-                    b.Navigation("PermissionFunctionOperationAss");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.Menu", b =>
-                {
-                    b.Navigation("PermissionMenuAss");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.PageElement", b =>
-                {
-                    b.Navigation("PermissionPageElementAss");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.Permission", b =>
-                {
-                    b.Navigation("permissionFileResourceAsses");
-
-                    b.Navigation("PermissionFunctionOperationAsses");
-
-                    b.Navigation("PermissionMenuAsses");
-
-                    b.Navigation("PermissionPageElementAsses");
-
-                    b.Navigation("RolePermissionAsses");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.Role", b =>
-                {
-                    b.Navigation("RolePermissionAsses");
-
-                    b.Navigation("UserRoleAsses");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.User", b =>
-                {
-                    b.Navigation("UserRoleAsses");
-
-                    b.Navigation("UserUserGroupAss");
-                });
-
-            modelBuilder.Entity("Pang.RBAC.Api.Entities.UserGroup", b =>
-                {
-                    b.Navigation("RoleUserGroupAsses");
-
-                    b.Navigation("UserUserGroupAsses");
                 });
 #pragma warning restore 612, 618
         }

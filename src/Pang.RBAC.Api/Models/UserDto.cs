@@ -1,6 +1,6 @@
 namespace Pang.RBAC.Api.Models
 {
-    public partial class UserDto : BaseDto
+    public class UserDto
     {
         public string Username{get; set;}
         public string Password{get; set;}

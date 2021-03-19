@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System;
 namespace Pang.RBAC.Api.Entities
 {
@@ -8,6 +7,6 @@ namespace Pang.RBAC.Api.Entities
         public Guid PageElementId{get; set;}
 
         public Permission Permission{get; set;}
-        public PageElement PageElement{get; set;}
+        public PageElement pageElement{get; set;}
     }
 }
