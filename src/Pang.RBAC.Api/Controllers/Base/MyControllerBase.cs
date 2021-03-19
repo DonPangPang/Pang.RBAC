@@ -53,7 +53,7 @@ namespace Pang.RBAC.Api.Controllers.Base
         {
             var data = await _repository.GetEntityByIdAsync(id);
 
-            var returnDto = _mapper.Map<IEnumerable<TModel>>(data);
+            var returnDto = _mapper.Map<TModel>(data);
 
             return Ok(returnDto);
         }
