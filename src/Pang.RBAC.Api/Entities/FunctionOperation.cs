@@ -26,5 +26,7 @@ namespace Pang.RBAC.Api.Entities
         /// </summary>
         /// <value></value>
         public Guid ParentId{get; set;}
+
+        public PermissionFunctionOperationAss PermissionFunctionOperationAss{get; set;}
     }
 }

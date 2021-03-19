@@ -16,6 +16,22 @@ namespace Pang.RBAC.Api.Data
         {
             modelBuilder.AddEntityTypes();
 
+            // modelBuilder.Entity<User>(x=>{
+            //     x.HasMany(y => y.UserRoleAsses)
+            //     .WithOne()
+            //     .HasForeignKey(z=>z.UserId)
+            //     .HasPrincipalKey(e=>e.Id)
+            //     .OnDelete(DeleteBehavior.Cascade);
+            // });
+
+            // modelBuilder.Entity<Role>(x=>{
+            //     x.HasMany(y => y.UserRoleAsses)
+            //     .WithOne()
+            //     .HasForeignKey(z=>z.RoleId)
+            //     .HasPrincipalKey(e=>e.Id)
+            //     .OnDelete(DeleteBehavior.Cascade);
+            // });
+
 
             modelBuilder.Entity<User>().HasData(
                 new User{
@@ -25,6 +41,21 @@ namespace Pang.RBAC.Api.Data
                     IsSuper = true
                 }
             );
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role{
+                    Id = Guid.Parse("4fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                    Name = "admin"
+                }
+            );
+
+            // modelBuilder.Entity<UserRoleAss>().HasData(
+            //     new UserRoleAss{
+            //         Id = Guid.Parse("5fa85f64-5717-4562-f3fc-2c963f66afa6"),
+            //         UserId = Guid.Parse("3fa85f64-5717-4562-f3fc-2c963f66afa6"),
+            //         RoleId = Guid.Parse("4fa85f64-5717-4562-f3fc-2c963f66afa6")
+            //     }
+            // );
 
             base.OnModelCreating(modelBuilder);
         }
