@@ -28,6 +28,8 @@ F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\Microsoft.I
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\Microsoft.OpenApi.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\Newtonsoft.Json.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\Newtonsoft.Json.Bson.dll
+F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\Npgsql.dll
+F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\SQLitePCLRaw.batteries_v2.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\SQLitePCLRaw.nativelibrary.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Debug\net5.0\publish\SQLitePCLRaw.core.dll

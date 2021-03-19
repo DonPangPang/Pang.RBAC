@@ -83,6 +83,7 @@ namespace Pang.RBAC.Api
 
             services.AddDbContext<PangDbContext>(opts =>
             {
+                // opts.UseNpgsql("Host=192.168.31.39;Database=rbac;Username=postgres;Password=postgres");
                 opts.UseSqlite("Data Source=Pang.db");
             });
 
