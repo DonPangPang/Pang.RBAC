@@ -13,7 +13,7 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
-    [Authorize("Identify")]
+    [Authorize]
     public class FileResourceController : MyControllerBase<FileResourceRepository, FileResource, FileResourceDto>
     {
         private readonly FileResourceRepository _fileResourceRepository;

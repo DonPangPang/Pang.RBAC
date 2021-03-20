@@ -38,6 +38,35 @@ namespace Pang.RBAC.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 身份认证配置
+            var AppContig = Configuration.GetSection("TokenParameter").Get<TokenParameter>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Identify", policy =>
+                        policy.Requirements.Add(new PermissionRequirement(ServiceProvider)));
+            })
+            .AddAuthentication(opts =>
+            {
+                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = AppContig.Audience,
+                    ValidIssuer = AppContig.Issuer,
+                    IssuerSigningKey =
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppContig.Secret))
+                };
+            });
+
+
             services.AddControllers(setup =>
             {
                 setup.ReturnHttpNotAcceptable = true;
@@ -107,36 +136,6 @@ namespace Pang.RBAC.Api
 
                 // //... and tell Swagger to use those XML comments.
                 // c.IncludeXmlComments(xmlPath);
-            });
-
-            ServiceProvider = services.BuildServiceProvider();
-
-            // 身份认证配置
-            var AppContig = Configuration.GetSection("TokenParameter").Get<TokenParameter>();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Identify", policy =>
-                        policy.Requirements.Add(new PermissionRequirement(ServiceProvider)));
-            })
-            .AddAuthentication(opts =>
-            {
-                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidAudience = AppContig.Audience,
-                    ValidIssuer = AppContig.Issuer,
-                    IssuerSigningKey =
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppContig.Secret))
-                };
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
