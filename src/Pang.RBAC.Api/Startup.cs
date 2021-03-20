@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +16,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Pang.RBAC.Api.Authorization;
 using Pang.RBAC.Api.Data;
+using Pang.RBAC.Api.Entities;
+using Pang.RBAC.Api.Repository;
 using Pang.RBAC.Api.Repository.Base;
 
 namespace Pang.RBAC.Api
@@ -25,14 +29,15 @@ namespace Pang.RBAC.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
+        public IServiceProvider ServiceProvider { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers(setup =>
             {
                 setup.ReturnHttpNotAcceptable = true;
@@ -68,9 +73,34 @@ namespace Pang.RBAC.Api
                     };
                 });
 
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pang.RBAC.Api", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "在下框中输入请求头中需要添加Jwt授权Token：Bearer Token",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
 
                 // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
                 // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -79,12 +109,42 @@ namespace Pang.RBAC.Api
                 // c.IncludeXmlComments(xmlPath);
             });
 
+            ServiceProvider = services.BuildServiceProvider();
+
+            // 身份认证配置
+            var AppContig = Configuration.GetSection("TokenParameter").Get<TokenParameter>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Identify", policy =>
+                        policy.Requirements.Add(new PermissionRequirement(ServiceProvider)));
+            })
+            .AddAuthentication(opts =>
+            {
+                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = AppContig.Audience,
+                    ValidIssuer = AppContig.Issuer,
+                    IssuerSigningKey =
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppContig.Secret))
+                };
+            });
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<PangDbContext>(opts =>
             {
-                // opts.UseNpgsql("Host=192.168.31.39;Database=rbac;Username=postgres;Password=postgres");
-                opts.UseSqlite("Data Source=Pang.db");
+    // opts.UseNpgsql("Host=192.168.31.39;Database=rbac;Username=postgres;Password=postgres");
+    opts.UseSqlite("Data Source=Pang.db");
             });
 
             services.AddCors(opts =>
@@ -97,26 +157,6 @@ namespace Pang.RBAC.Api
                 });
             });
 
-            // 身份认证配置
-            var validAudience = Configuration["audience"];
-            var validIssuer = Configuration["issuer"];
-            var securityKey = Configuration["secret"];
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidAudience = validAudience,
-                        ValidIssuer = validIssuer,
-                        IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey))
-                    };
-                });
-
             var types = Assembly.GetExecutingAssembly().GetTypes().AsEnumerable();
             var repositorys = types.Where(t => t.Namespace == "Pang.RBAC.Api.Repository" && !t.IsAbstract && !t.IsInterface);
 
@@ -124,6 +164,8 @@ namespace Pang.RBAC.Api
             {
                 services.AddScoped(repo);
             }
+
+            services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
         }
 
@@ -136,7 +178,7 @@ namespace Pang.RBAC.Api
             }
 
             app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pang.RBAC.Api v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pang.RBAC.Api v1"));
 
             // app.UseHttpsRedirection();
 
