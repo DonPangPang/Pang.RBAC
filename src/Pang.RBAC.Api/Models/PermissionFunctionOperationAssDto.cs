@@ -2,17 +2,19 @@ using System;
 
 namespace Pang.RBAC.Api.Models
 {
+    /// <summary>
+    /// 权限和操作之间的关联
+    /// </summary>
     public class PermissionFunctionOperationAssDto : BaseDto
     {
         /// <summary>
         /// 权限Id
         /// </summary>
-        /// <value></value>
-        public Guid PermissionId{get; set;}
+        public Guid PermissionId { get; set; }
+
         /// <summary>
         /// 功能操作Id
         /// </summary>
-        /// <value></value>
-        public Guid FunctionOperationId{get; set;}
+        public Guid FunctionOperationId { get; set; }
     }
 }

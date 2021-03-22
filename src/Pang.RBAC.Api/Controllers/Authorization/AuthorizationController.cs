@@ -12,12 +12,16 @@ using Pang.RBAC.Api.Repository;
 
 namespace Pang.RBAC.Api.Controllers.Authorization
 {
+    /// <summary>
+    /// 授权接口
+    /// </summary>
     [ApiController]
     [Route("[Controller]/[Action]")]
     public class AuthorizationController : ControllerBase
     {
-        private TokenParameter _tokenParameter = new TokenParameter();
+        private PermissionRequirement _tokenParameter = new PermissionRequirement();
         private readonly UserRepository _userRepository;
+
         public AuthorizationController(UserRepository userRepository)
         {
             var config = new ConfigurationBuilder()
@@ -25,11 +29,16 @@ namespace Pang.RBAC.Api.Controllers.Authorization
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            _tokenParameter = config.GetSection("TokenParameter").Get<TokenParameter>();
+            _tokenParameter = config.GetSection("TokenParameter").Get<PermissionRequirement>();
 
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="request">用户名和密码</param>
+        /// <returns>Token</returns>
         [HttpPost, Route("requestToken")]
         public IActionResult RequestToken([FromBody] UserDto request)
         {
@@ -37,15 +46,12 @@ namespace Pang.RBAC.Api.Controllers.Authorization
             if (request.Username == null && request.Password == null)
                 return BadRequest("Invalid Request");
 
-            
-
             //生成Token和RefreshToken
             var token = GenUserToken(request.Username, "admin");
             var refreshToken = "123456";
 
             return Ok(new[] { token, refreshToken });
         }
-
 
         //这儿是真正的生成Token代码
         private string GenUserToken(string username, string role)
@@ -68,6 +74,5 @@ namespace Pang.RBAC.Api.Controllers.Authorization
 
             return token;
         }
-
     }
 }

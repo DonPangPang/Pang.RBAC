@@ -4,9 +4,10 @@ using Pang.RBAC.Api.Models;
 
 namespace Pang.RBAC.Api.Profiles
 {
-    public class ProfileBase: Profile
+    public class ProfileBase : Profile
     {
-        public ProfileBase(){
+        public ProfileBase()
+        {
             CreateMap<UserDto, User>();
             CreateMap<User, UserDto>();
 
@@ -34,8 +35,8 @@ namespace Pang.RBAC.Api.Profiles
             CreateMap<PermissionMenuAss, PermissionMenuAssDto>();
             CreateMap<PermissionMenuAssDto, PermissionMenuAss>();
 
-            CreateMap<PermissionPageElementAss, PermssionPageElementAssDto>();
-            CreateMap<PermssionPageElementAssDto, PermissionPageElementAss>();
+            CreateMap<PermissionPageElementAss, PermissionPageElementAssDto>();
+            CreateMap<PermissionPageElementAssDto, PermissionPageElementAss>();
 
             CreateMap<Role, RoleDto>();
             CreateMap<RoleDto, Role>();

@@ -54,6 +54,16 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FunctionOperation");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            Code = "/api",
+                            InterceptUrl = "/api",
+                            Name = "admin",
+                            ParentId = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.Menu", b =>
@@ -102,6 +112,13 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permission");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            Name = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.PermissionFileResourceAss", b =>
@@ -146,6 +163,14 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasIndex("PermissionId");
 
                     b.ToTable("PermissionFunctionOperationAss");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dfab8c30-c4c9-4431-86ba-5a454bd45b05"),
+                            FunctionOperationId = new Guid("6fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            PermissionId = new Guid("5fa85f64-5717-4562-f3fc-2c963f66afa6")
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.PermissionMenuAss", b =>
@@ -237,6 +262,14 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RolePermissionAss");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("08f649fa-9292-4379-8c0d-b5c02198d201"),
+                            PermissionId = new Guid("5fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            RoleId = new Guid("4fa85f64-5717-4562-f3fc-2c963f66afa6")
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.RoleUserGroupAss", b =>
@@ -325,6 +358,14 @@ namespace Pang.RBAC.Api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoleAss");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6352afa9-95e6-4e05-a008-0f9a94c8b05e"),
+                            RoleId = new Guid("4fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                            UserId = new Guid("3fa85f64-5717-4562-f3fc-2c963f66afa6")
+                        });
                 });
 
             modelBuilder.Entity("Pang.RBAC.Api.Entities.UserUserGroupAss", b =>

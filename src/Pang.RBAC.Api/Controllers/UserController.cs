@@ -10,11 +10,13 @@ using Pang.RBAC.Api.Controllers.Base;
 using System.Linq;
 using Pang.RBAC.Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
+    [Authorize("Identify")]
     public class UserController : MyControllerBase<UserRepository, User, UserDto>
     {
         private readonly UserRepository _userRepository;

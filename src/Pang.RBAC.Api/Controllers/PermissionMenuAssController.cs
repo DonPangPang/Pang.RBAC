@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.Controllers.Base;
 using Pang.RBAC.Api.Entities;
@@ -10,6 +11,7 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
+    [Authorize("Identify")]
     public class PermissionMenuAssController : MyControllerBase<PermissionMenuAssRepository, PermissionMenuAss, PermissionMenuAssDto>
     {
         public PermissionMenuAssController(PermissionMenuAssRepository repository, IMapper mapper) : base(repository, mapper)

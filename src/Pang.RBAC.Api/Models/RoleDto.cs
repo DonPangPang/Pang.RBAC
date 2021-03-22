@@ -1,7 +1,13 @@
 namespace Pang.RBAC.Api.Models
 {
+    /// <summary>
+    /// ½ÇÉ«
+    /// </summary>
     public class RoleDto : BaseDto
     {
-        public string Name{get; set;}
+        /// <summary>
+        /// ½ÇÉ«Ãû
+        /// </summary>
+        public string Name { get; set; }
     }
 }

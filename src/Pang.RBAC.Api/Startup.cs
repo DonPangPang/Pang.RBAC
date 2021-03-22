@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -29,21 +30,19 @@ namespace Pang.RBAC.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
         }
 
         public IConfiguration Configuration { get; }
-        public IServiceProvider ServiceProvider { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // 身份认证配置
-            var AppContig = Configuration.GetSection("TokenParameter").Get<TokenParameter>();
+            var AppContig = Configuration.GetSection("TokenParameter").Get<PermissionRequirement>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Identify", policy =>
-                        policy.Requirements.Add(new PermissionRequirement(ServiceProvider)));
+                        policy.Requirements.Add(new PermissionRequirement()));
             })
             .AddAuthentication(opts =>
             {
@@ -65,7 +64,6 @@ namespace Pang.RBAC.Api
                         new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppContig.Secret))
                 };
             });
-
 
             services.AddControllers(setup =>
             {
@@ -102,7 +100,6 @@ namespace Pang.RBAC.Api
                     };
                 });
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pang.RBAC.Api", Version = "v1" });
@@ -131,19 +128,19 @@ namespace Pang.RBAC.Api
                     }
                 });
 
-                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
-                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-                // //... and tell Swagger to use those XML comments.
-                // c.IncludeXmlComments(xmlPath);
+                //... and tell Swagger to use those XML comments.
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<PangDbContext>(opts =>
             {
-    // opts.UseNpgsql("Host=192.168.31.39;Database=rbac;Username=postgres;Password=postgres");
-    opts.UseSqlite("Data Source=Pang.db");
+                // opts.UseNpgsql("Host=192.168.31.39;Database=rbac;Username=postgres;Password=postgres");
+                opts.UseSqlite("Data Source=Pang.db");
             });
 
             services.AddCors(opts =>
@@ -157,15 +154,16 @@ namespace Pang.RBAC.Api
             });
 
             var types = Assembly.GetExecutingAssembly().GetTypes().AsEnumerable();
-            var repositorys = types.Where(t => t.Namespace == "Pang.RBAC.Api.Repository" && !t.IsAbstract && !t.IsInterface);
+            var repositories = types.Where(t => t.Namespace == "Pang.RBAC.Api.Repository" && !t.IsAbstract && !t.IsInterface);
 
-            foreach (var repo in repositorys)
+            foreach (var repo in repositories)
             {
                 services.AddScoped(repo);
             }
 
-            services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,11 +8,13 @@ using Pang.RBAC.Api.Entities;
 using Pang.RBAC.Api.Models;
 using Pang.RBAC.Api.Repository;
 using Pang.RBAC.Api.Repository.Base;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
+    [Authorize("Identify")]
     public class FunctionOperationController : MyControllerBase<FunctionOperationRepository, FunctionOperation, FunctionOperationDto>
     {
         private readonly FunctionOperationRepository _functionOperationRepository;

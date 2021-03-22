@@ -1,8 +1,15 @@
 using System;
+
 namespace Pang.RBAC.Api.Models
 {
+    /// <summary>
+    /// »ùÀà
+    /// </summary>
     public class BaseDto
     {
-        public Guid Id{get; set;}
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }

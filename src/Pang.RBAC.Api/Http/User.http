@@ -1,6 +1,7 @@
 @host = http://localhost:5000
 @conType = Content-Type:application/json
 
+@token = 0
 
 ###---------------- User ----------------###
 
@@ -15,7 +16,8 @@ POST {{host}}/User/CreateUser HTTP/1.1
 
 ### 获取所有用户
 GET {{host}}/User/GetAllUsers HTTP/1.1
-{{conType}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### 获取某个用户
 @userId = 4a35bbac-49a2-418a-9758-1949e8c732ed
@@ -26,3 +28,13 @@ GET {{host}}/User/GetUserById/{{userId}} HTTP/1.1
 ### 删除某个用户
 DELETE {{host}}/User/DeleteUser/{{userId}} HTTP/1.1
 {{conType}}
+
+###
+
+POST http://localhost:5050/Authorization/RequestToken/requestToken HTTP/1.1
+
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "username": "string",
+  "password": "string"
+}

@@ -2,7 +2,7 @@ using System;
 namespace Pang.RBAC.Api.Entities
 {
     /// <summary>
-    /// 文件表
+    /// 文件资源
     /// </summary>
     public class FileResource: Entity
     {

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Pang.RBAC.Api.Authorization
 {
-    public class TokenParameter
+    public class TokenParameter : IAuthorizationRequirement
     {
         public string Name{get; set;}
         public string Secret{get; set;}

@@ -13,10 +13,11 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
-    [Authorize]
+    [Authorize("Identify")]
     public class FileResourceController : MyControllerBase<FileResourceRepository, FileResource, FileResourceDto>
     {
         private readonly FileResourceRepository _fileResourceRepository;
+
         public FileResourceController(FileResourceRepository fileResourceRepository, IMapper mapper) : base(fileResourceRepository, mapper)
         {
             _fileResourceRepository = fileResourceRepository ?? throw new System.ArgumentNullException(nameof(fileResourceRepository));

@@ -19,21 +19,11 @@ namespace Pang.RBAC.Api.Repository
             _dbSet = base._dbSet as DbSet<UserRoleAss>;
         }
 
-        public async Task<IEnumerable<UserRoleAss>> GetRoles(Guid userId)
+        public async Task<IEnumerable<UserRoleAss>> GetRolesByUserId(Guid userId)
         {
             var data = await _dbSet.Where(x=>x.UserId == userId).ToListAsync();
 
             return data;
         }
-
-        // public override void AddEntity(UserRoleAss eneity)
-        // {
-        //     var test = new UserRoleAss{
-        //         Id = eneity.Id
-        //     };
-        //     base.AddEntity(test);
-        //     _context.SaveChangesAsync();
-        //     base.UpdateEntity(eneity);
-        // }
     }
 }

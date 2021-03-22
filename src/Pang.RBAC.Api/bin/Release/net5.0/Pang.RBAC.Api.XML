@@ -1,0 +1,506 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Pang.RBAC.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Pang.RBAC.Api.Controllers.Authorization.AuthorizationController">
+            <summary>
+            授权接口
+            </summary>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Authorization.AuthorizationController.RequestToken(Pang.RBAC.Api.Models.UserDto)">
+            <summary>
+            获取Token
+            </summary>
+            <param name="request">用户名和密码</param>
+            <returns>Token</returns>
+        </member>
+        <member name="T:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3">
+            <summary>
+            基础Api配置
+            </summary>
+            <typeparam name="TRepository">仓储类型</typeparam>
+            <typeparam name="TEntity">实体类型</typeparam>
+            <typeparam name="TModel">模型类型</typeparam>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.#ctor(Pang.RBAC.Api.Repository.Base.RepositoryBase{`1},AutoMapper.IMapper)">
+            <summary>
+            实例化基础Api配置
+            </summary>
+            <param name="repository">配置仓储</param>
+            <param name="mapper">映射器</param>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.GetEntitiesAsync">
+            <summary>
+            获取所有的实体
+            </summary>
+            <returns>所有的实体数据</returns>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.GetEntitiesByPagedAsync(Pang.RBAC.Api.DtoParameters.Base.DtoParametersBase)">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="parameters">参数</param>
+            <returns>分页数据</returns>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.GetEntityByIdAsync(System.Guid)">
+            <summary>
+            通过Id获取数据
+            </summary>
+            <param name="id">Id</param>
+            <returns>数据</returns>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.GetEntitiesCollectionAsync(System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            通过数据集合获取数据
+            </summary>
+            <param name="ids">Id集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.CreateEntityAsync(`2)">
+            <summary>
+            创建一条实体数据
+            </summary>
+            <param name="entity">实体数据(Id不必填写)</param>
+            <returns>创建的数据</returns>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.UpdateEntityAsync(System.Guid,`2)">
+            <summary>
+            更新一条实体的数据
+            </summary>
+            <param name="id">要更新的数据的Id</param>
+            <param name="entity">更新的数据</param>
+            <returns>更新后的数据</returns>
+        </member>
+        <member name="M:Pang.RBAC.Api.Controllers.Base.MyControllerBase`3.DeleteEntityAsync(System.Guid)">
+            <summary>
+            删除一条数据
+            </summary>
+            <param name="id">要删除的数据的Id</param>
+            <returns>删除的数据</returns>
+        </member>
+        <member name="P:Pang.RBAC.Api.DtoParameters.Base.DtoParametersBase.PageNumber">
+            <summary>
+            页码
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.DtoParameters.Base.DtoParametersBase.PageSize">
+            <summary>
+            每页数据条数
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.Entity">
+            <summary>
+            实体基类, 默认配置Id字段
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.Entity.Id">
+            <summary>
+            Id字段
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.FileResource">
+            <summary>
+            文件资源
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.FileResource.Name">
+            <summary>
+            文件名
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.FileResource.Url">
+            <summary>
+            文件路径
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.FunctionOperation">
+            <summary>
+            功能操作表
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.FunctionOperation.Name">
+            <summary>
+            操作名
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.FunctionOperation.Code">
+            <summary>
+            操作编码
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.FunctionOperation.InterceptUrl">
+            <summary>
+            拦截Url前缀
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.FunctionOperation.ParentId">
+            <summary>
+            父操作ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.Menu">
+            <summary>
+            菜单表
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.Menu.Name">
+            <summary>
+            菜单名
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.Menu.Url">
+            <summary>
+            菜单Url
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.Menu.ParentId">
+            <summary>
+            父菜单Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.PageElement">
+            <summary>
+            页面元素表
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PageElement.Code">
+            <summary>
+            页面元素编码
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.Permission">
+            <summary>
+            权限表
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.Permission.Name">
+            <summary>
+            权限类型/名称
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.PermissionFileResourceAss">
+            <summary>
+            权限文件关联表
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFileResourceAss.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFileResourceAss.FileResourceId">
+            <summary>
+            文件Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFileResourceAss.Permission">
+            <summary>
+            权限
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFileResourceAss.FileResource">
+            <summary>
+            文件
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFunctionOperationAss.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFunctionOperationAss.FunctionOperationId">
+            <summary>
+            功能操作Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFunctionOperationAss.Permission">
+            <summary>
+            权限
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Pang.RBAC.Api.Entities.PermissionFunctionOperationAss.FunctionOperation">
+            <summary>
+            功能操作
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Pang.RBAC.Api.Entities.PermissionMenuAss">
+            <summary>
+            权限菜单关联表
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.BaseDto">
+            <summary>
+            基类
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.BaseDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.FileResourceDto">
+            <summary>
+            文件资源
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.FileResourceDto.Name">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.FileResourceDto.Url">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.FunctionOperationDto">
+            <summary>
+            操作
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.FunctionOperationDto.Name">
+            <summary>
+            操作名
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.FunctionOperationDto.Code">
+            <summary>
+            操作编码
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.FunctionOperationDto.InterceptUrl">
+            <summary>
+            拦截Url前缀
+            <para>
+            例如: /api/Create....那么这个请求在用户使用的时候就会被拦截, 无法访问
+            </para>
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.FunctionOperationDto.ParentId">
+            <summary>
+            父操作ID
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.MenuDto">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.MenuDto.Name">
+            <summary>
+            菜单名
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.MenuDto.Url">
+            <summary>
+            菜单Url
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.MenuDto.ParentId">
+            <summary>
+            父菜单Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.PageElementDto">
+            <summary>
+            页面元素
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PageElementDto.Code">
+            <summary>
+            页面元素编码
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.PermissionDto">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionDto.Name">
+            <summary>
+            权限类型/名称
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.PermissionFileResourceAssDto">
+            <summary>
+            权限和文件资源的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionFileResourceAssDto.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionFileResourceAssDto.FileResourceId">
+            <summary>
+            文件Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.PermissionFunctionOperationAssDto">
+            <summary>
+            权限和操作之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionFunctionOperationAssDto.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionFunctionOperationAssDto.FunctionOperationId">
+            <summary>
+            功能操作Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.PermissionMenuAssDto">
+            <summary>
+            权限和菜单之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionMenuAssDto.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionMenuAssDto.MenuId">
+            <summary>
+            菜单Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.PermissionPageElementAssDto">
+            <summary>
+            权限和页面元素之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionPageElementAssDto.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.PermissionPageElementAssDto.PageElementId">
+            <summary>
+            页面元素Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.RoleDto">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.RoleDto.Name">
+            <summary>
+            角色名
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.RolePermissionAssDto">
+            <summary>
+            角色和权限之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.RolePermissionAssDto.RoleId">
+            <summary>
+            角色Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.RolePermissionAssDto.PermissionId">
+            <summary>
+            权限Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.RoleUserGroupAssDto">
+            <summary>
+            角色和用户组之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.RoleUserGroupAssDto.UserGroupId">
+            <summary>
+            用户组Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.RoleUserGroupAssDto.RoleId">
+            <summary>
+            角色Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.UserDto">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserDto.Username">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserDto.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.UserGroupDto">
+            <summary>
+            用户组
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserGroupDto.Name">
+            <summary>
+            用户组名
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserGroupDto.ParentId">
+            <summary>
+            父用户组Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.UserRoleAssDto">
+            <summary>
+            用户和角色之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserRoleAssDto.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserRoleAssDto.RoleId">
+            <summary>
+            角色Id
+            </summary>
+        </member>
+        <member name="T:Pang.RBAC.Api.Models.UserUserGroupAssDto">
+            <summary>
+            用户和用户组之间的关联
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserUserGroupAssDto.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Pang.RBAC.Api.Models.UserUserGroupAssDto.UserGroupId">
+            <summary>
+            用户组Id
+            </summary>
+        </member>
+    </members>
+</doc>

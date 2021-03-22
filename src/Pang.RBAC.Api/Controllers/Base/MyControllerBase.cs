@@ -10,20 +10,35 @@ using Pang.RBAC.Api.Repository.Base;
 
 namespace Pang.RBAC.Api.Controllers.Base
 {
+    /// <summary>
+    /// 基础Api配置
+    /// </summary>
+    /// <typeparam name="TRepository">仓储类型</typeparam>
+    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TModel">模型类型</typeparam>
     public class MyControllerBase<TRepository, TEntity, TModel> : ControllerBase
                 where TRepository : RepositoryBase<TEntity> where TEntity : Entity
     {
         private readonly TRepository _repository;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 实例化基础Api配置
+        /// </summary>
+        /// <param name="repository">配置仓储</param>
+        /// <param name="mapper">映射器</param>
         public MyControllerBase(RepositoryBase<TEntity> repository, IMapper mapper)
         {
             _repository = (TRepository)(repository ?? throw new ArgumentNullException(nameof(repository)));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// 获取所有的实体
+        /// </summary>
+        /// <returns>所有的实体数据</returns>
         [HttpGet]
-        public async Task<IActionResult> GetEntitisAsync()
+        public async Task<IActionResult> GetEntitiesAsync()
         {
             var data = await _repository.GetEntitiesAsync();
 
@@ -32,6 +47,11 @@ namespace Pang.RBAC.Api.Controllers.Base
             return Ok(returnDto);
         }
 
+        /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="parameters">参数</param>
+        /// <returns>分页数据</returns>
         [HttpGet]
         public async Task<IActionResult> GetEntitiesByPagedAsync([FromQuery] DtoParametersBase parameters)
         {
@@ -47,6 +67,11 @@ namespace Pang.RBAC.Api.Controllers.Base
             return Ok(returnDto);
         }
 
+        /// <summary>
+        /// 通过Id获取数据
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns>数据</returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetEntityByIdAsync(Guid id)
@@ -58,6 +83,11 @@ namespace Pang.RBAC.Api.Controllers.Base
             return Ok(returnDto);
         }
 
+        /// <summary>
+        /// 通过数据集合获取数据
+        /// </summary>
+        /// <param name="ids">Id集合</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{ids}")]
         public async Task<IActionResult> GetEntitiesCollectionAsync(IEnumerable<Guid> ids)
@@ -74,6 +104,11 @@ namespace Pang.RBAC.Api.Controllers.Base
             return Ok(returnDto);
         }
 
+        /// <summary>
+        /// 创建一条实体数据
+        /// </summary>
+        /// <param name="entity">实体数据(Id不必填写)</param>
+        /// <returns>创建的数据</returns>
         [HttpPost]
         public async Task<IActionResult> CreateEntityAsync([FromBody] TModel entity)
         {
@@ -92,6 +127,12 @@ namespace Pang.RBAC.Api.Controllers.Base
             return Ok(returnDto);
         }
 
+        /// <summary>
+        /// 更新一条实体的数据
+        /// </summary>
+        /// <param name="id">要更新的数据的Id</param>
+        /// <param name="entity">更新的数据</param>
+        /// <returns>更新后的数据</returns>
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateEntityAsync(Guid id, [FromBody] TModel entity)
@@ -135,6 +176,11 @@ namespace Pang.RBAC.Api.Controllers.Base
             return NoContent();
         }
 
+        /// <summary>
+        /// 删除一条数据
+        /// </summary>
+        /// <param name="id">要删除的数据的Id</param>
+        /// <returns>删除的数据</returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteEntityAsync(Guid id)

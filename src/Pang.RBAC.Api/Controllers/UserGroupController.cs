@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.Controllers.Base;
 using Pang.RBAC.Api.Entities;
@@ -13,6 +14,7 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
+    [Authorize("Identify")]
     public class UserGroupController : MyControllerBase<UserGroupRepository, UserGroup, UserGroupDto>
     {
         private readonly UserGroupRepository _userGroupRepository;
