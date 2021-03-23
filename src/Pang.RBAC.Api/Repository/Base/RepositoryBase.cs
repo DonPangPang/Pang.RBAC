@@ -1,22 +1,20 @@
-using System.Text.RegularExpressions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pang.RBAC.Api.Data;
 using Pang.RBAC.Api.DtoParameters.Base;
 using Pang.RBAC.Api.Entities;
 using Pang.RBAC.Api.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pang.RBAC.Api.Repository.Base
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : Entity
     {
-        private readonly PangDbContext _context;
-        public DbSet<T> _dbSet{get;}
+        protected readonly PangDbContext _context;
+        public DbSet<T> _dbSet { get; }
+
         public RepositoryBase(PangDbContext context)
         {
             _context = context;
@@ -66,7 +64,7 @@ namespace Pang.RBAC.Api.Repository.Base
             return await _dbSet.AnyAsync(x => x.Id == id);
         }
 
-        public virtual async Task<IEnumerable<T>> GetChildrens(Guid id)
+        public virtual async Task<IEnumerable<T>> GetChildren(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -126,6 +124,42 @@ namespace Pang.RBAC.Api.Repository.Base
         public virtual void UpdateEntity(T eneity)
         {
             _dbSet.Update(eneity);
+        }
+
+        // TODO: 实现新添加的批量处理部分
+        Task IRepositoryBase<T>.AddEntity(T eneity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddEntities(IEnumerable<T> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepositoryBase<T>.Delete(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepositoryBase<T>.DeleteById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteByIds(IEnumerable<Guid> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepositoryBase<T>.UpdateEntity(T eneity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateEntities(IEnumerable<T> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Pang.RBAC.Api.Extensions
 {
     public static class IQueryableExtension
@@ -55,7 +53,7 @@ namespace Pang.RBAC.Api.Extensions
         //                 orderDescending = !orderDescending;
         //             }
 
-        //             source = source.OrderBy(destinationProperty 
+        //             source = source.OrderBy(destinationProperty
         //                                     + (orderDescending ? " descending" : " ascending"));
         //         }
         //     }

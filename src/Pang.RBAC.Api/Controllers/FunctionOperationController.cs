@@ -1,14 +1,13 @@
-using System.Collections.Generic;
-using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.Controllers.Base;
 using Pang.RBAC.Api.Entities;
 using Pang.RBAC.Api.Models;
 using Pang.RBAC.Api.Repository;
-using Pang.RBAC.Api.Repository.Base;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pang.RBAC.Api.Controllers
 {
@@ -19,6 +18,7 @@ namespace Pang.RBAC.Api.Controllers
     {
         private readonly FunctionOperationRepository _functionOperationRepository;
         private readonly IMapper _mapper;
+
         public FunctionOperationController(FunctionOperationRepository repository, IMapper mapper) : base(repository, mapper)
         {
             _functionOperationRepository = repository;
@@ -29,7 +29,7 @@ namespace Pang.RBAC.Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetChildrens(Guid id)
         {
-            var childrens = await _functionOperationRepository.GetChildrens(id);
+            var childrens = await _functionOperationRepository.GetChildren(id);
 
             var returnDtos = _mapper.Map<IEnumerable<FunctionOperationDto>>(childrens);
 

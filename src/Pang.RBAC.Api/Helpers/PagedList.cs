@@ -1,16 +1,16 @@
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pang.RBAC.Api.Helpers
 {
-    public class PagedList<T>: List<T>
+    public class PagedList<T> : List<T>
     {
         public int CurrentPage { get; private set; }
         public int TotalPages { get; private set; }
-        private int PageSize{get; set;}
+        private int PageSize { get; set; }
         public int TotalCount { get; private set; }
         public bool HasPrevious => CurrentPage > 1;
         public bool HasNext => CurrentPage < TotalPages;
@@ -20,7 +20,7 @@ namespace Pang.RBAC.Api.Helpers
             TotalPages = count;
             PageSize = pageSize;
             CurrentPage = pageNumber;
-            TotalPages = (int) Math.Ceiling(count / (double) PageSize);
+            TotalPages = (int)Math.Ceiling(count / (double)PageSize);
 
             AddRange(items);
         }

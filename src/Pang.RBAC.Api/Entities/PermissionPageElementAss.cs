@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using System;
+﻿using System;
+
 namespace Pang.RBAC.Api.Entities
 {
-    public class PermissionPageElementAss: Entity
+    public class PermissionPageElementAss : Entity
     {
-        public Guid PermissionId{get; set;}
-        public Guid PageElementId{get; set;}
+        public Guid PermissionId { get; set; }
+        public Guid PageElementId { get; set; }
 
-        public Permission Permission{get; set;}
-        public PageElement PageElement{get; set;}
+        public Permission Permission { get; set; }
+        public PageElement PageElement { get; set; }
     }
 }

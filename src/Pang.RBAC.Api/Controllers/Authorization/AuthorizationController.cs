@@ -1,14 +1,14 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Pang.RBAC.Api.Authorization;
+using Pang.RBAC.Api.Models;
+using Pang.RBAC.Api.Repository;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using Pang.RBAC.Api.Authorization;
-using Pang.RBAC.Api.Entities;
-using Pang.RBAC.Api.Models;
-using Pang.RBAC.Api.Repository;
+using System.Threading.Tasks;
 
 namespace Pang.RBAC.Api.Controllers.Authorization
 {
@@ -19,7 +19,7 @@ namespace Pang.RBAC.Api.Controllers.Authorization
     [Route("[Controller]/[Action]")]
     public class AuthorizationController : ControllerBase
     {
-        private PermissionRequirement _tokenParameter = new PermissionRequirement();
+        private PermissionRequirement _tokenParameter;
         private readonly UserRepository _userRepository;
 
         public AuthorizationController(UserRepository userRepository)
@@ -31,7 +31,7 @@ namespace Pang.RBAC.Api.Controllers.Authorization
 
             _tokenParameter = config.GetSection("TokenParameter").Get<PermissionRequirement>();
 
-            _userRepository = userRepository;
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         /// <summary>
@@ -39,26 +39,36 @@ namespace Pang.RBAC.Api.Controllers.Authorization
         /// </summary>
         /// <param name="request">用户名和密码</param>
         /// <returns>Token</returns>
-        [HttpPost, Route("requestToken")]
-        public IActionResult RequestToken([FromBody] UserDto request)
+        [HttpPost]
+        public async Task<IActionResult> RequestToken([FromBody] UserDto request)
         {
-            // TODO: 对接 Repository
             if (request.Username == null && request.Password == null)
                 return BadRequest("Invalid Request");
 
+            if (!(await _userRepository.UserExistAsync(request.Username)))
+            {
+                return BadRequest("账号不存在");
+            }
+
+            var user = await _userRepository.GetUserByUserNameAsync(request.Username);
+            if (user.Password != request.Password)
+            {
+                return BadRequest("密码错误");
+            }
+
             //生成Token和RefreshToken
-            var token = GenUserToken(request.Username, "admin");
+            var token = GenUserToken(user.Id, request.Username, "admin");
             var refreshToken = "123456";
 
             return Ok(new[] { token, refreshToken });
         }
 
-        //这儿是真正的生成Token代码
-        private string GenUserToken(string username, string role)
+        //生成Token代码
+        private string GenUserToken(Guid id, string username, string role)
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, "3fa85f64-5717-4562-f3fc-2c963f66afa6"),
+                new Claim(ClaimTypes.Name, id.ToString()),
                 new Claim(ClaimTypes.DateOfBirth,DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             };
 

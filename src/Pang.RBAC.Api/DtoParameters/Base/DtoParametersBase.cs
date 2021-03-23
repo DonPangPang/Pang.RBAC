@@ -1,4 +1,4 @@
-namespace Pang.RBAC.Api.DtoParameters.Base
+锘縩amespace Pang.RBAC.Api.DtoParameters.Base
 {
     public class DtoParametersBase
     {
@@ -6,7 +6,7 @@ namespace Pang.RBAC.Api.DtoParameters.Base
         public string Q { get; set; }
 
         /// <summary>
-        /// 页码
+        /// 椤电爜
         /// </summary>
         public int PageNumber { get; set; } = 1;
 
@@ -15,7 +15,7 @@ namespace Pang.RBAC.Api.DtoParameters.Base
         public string Fields { get; set; }
 
         /// <summary>
-        /// 每页数据条数
+        /// 姣忛〉鏁版嵁鏉℃暟
         /// </summary>
         public int PageSize
         {

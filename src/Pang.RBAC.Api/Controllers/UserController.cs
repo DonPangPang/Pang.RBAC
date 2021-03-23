@@ -1,16 +1,12 @@
-using System.Diagnostics.Contracts;
-using System;
-using System.Collections;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Pang.RBAC.Api.Entities;
-using Pang.RBAC.Api.Repository;
-using Pang.RBAC.Api.DtoParameters;
-using Pang.RBAC.Api.Controllers.Base;
-using System.Linq;
-using Pang.RBAC.Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Pang.RBAC.Api.Controllers.Base;
+using Pang.RBAC.Api.Entities;
+using Pang.RBAC.Api.Models;
+using Pang.RBAC.Api.Repository;
+using System;
+using System.Threading.Tasks;
 
 namespace Pang.RBAC.Api.Controllers
 {
@@ -20,9 +16,18 @@ namespace Pang.RBAC.Api.Controllers
     public class UserController : MyControllerBase<UserRepository, User, UserDto>
     {
         private readonly UserRepository _userRepository;
+
         public UserController(UserRepository userRepository, IMapper mapper) : base(userRepository, mapper)
         {
             _userRepository = userRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserRoles(Guid id)
+        {
+            var data = await _userRepository.GetUserRoles(id);
+
+            return Ok(data);
         }
 
         #region 丢弃
@@ -103,7 +108,7 @@ namespace Pang.RBAC.Api.Controllers
         //     return NoContent();
         // }
 
-        #endregion
+        #endregion 丢弃
 
         // [HttpGet]
         // [Route("{id}")]
@@ -124,6 +129,5 @@ namespace Pang.RBAC.Api.Controllers
 
         //     return Ok(roles);
         // }
-
     }
 }

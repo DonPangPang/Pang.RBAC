@@ -5,7 +5,9 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B4B42052-37A6-41E6-8454-74EE364405EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pang.RBAC.Api", "src\Pang.RBAC.Api\Pang.RBAC.Api.csproj", "{416918E7-15B8-40F8-BDD8-D9969FABCB76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pang.RBAC.Api", "src\Pang.RBAC.Api\Pang.RBAC.Api.csproj", "{416918E7-15B8-40F8-BDD8-D9969FABCB76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E9371B7D-C8C8-49FB-AE4D-1B6A366B63D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{416918E7-15B8-40F8-BDD8-D9969FABCB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -33,7 +32,13 @@ Global
 		{416918E7-15B8-40F8-BDD8-D9969FABCB76}.Release|x86.ActiveCfg = Release|Any CPU
 		{416918E7-15B8-40F8-BDD8-D9969FABCB76}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{416918E7-15B8-40F8-BDD8-D9969FABCB76} = {B4B42052-37A6-41E6-8454-74EE364405EE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8821DCDB-20F0-4426-A4E4-1A1035F33D4E}
 	EndGlobalSection
 EndGlobal

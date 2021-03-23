@@ -1,7 +1,6 @@
-using System.Linq;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pang.RBAC.Api.Entities;
+using System.Linq;
 
 namespace Pang.RBAC.Api.Extensions
 {

@@ -1,9 +1,9 @@
-using System;
+ï»¿using System;
 
 namespace Pang.RBAC.Api.Models
 {
     /// <summary>
-    /// »ùÀà
+    /// åŸºç±»
     /// </summary>
     public class BaseDto
     {

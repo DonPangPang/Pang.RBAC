@@ -1,19 +1,19 @@
-using System;
+ï»¿using System;
 
 namespace Pang.RBAC.Api.Models
 {
     /// <summary>
-    /// ÓÃ»§×é
+    /// ç”¨æˆ·ç»„
     /// </summary>
     public class UserGroupDto : BaseDto
     {
         /// <summary>
-        /// ÓÃ»§×éÃû
+        /// ç”¨æˆ·ç»„å
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// ¸¸ÓÃ»§×éId
+        /// çˆ¶ç”¨æˆ·ç»„Id
         /// </summary>
         public Guid ParentId { get; set; }
     }

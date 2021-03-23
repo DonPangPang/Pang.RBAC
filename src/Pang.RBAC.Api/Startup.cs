@@ -1,9 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -19,9 +13,10 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Pang.RBAC.Api.Authorization;
 using Pang.RBAC.Api.Data;
-using Pang.RBAC.Api.Entities;
-using Pang.RBAC.Api.Repository;
-using Pang.RBAC.Api.Repository.Base;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace Pang.RBAC.Api
 {
@@ -128,11 +123,11 @@ namespace Pang.RBAC.Api
                     }
                 });
 
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-                //... and tell Swagger to use those XML comments.
-                c.IncludeXmlComments(xmlPath);
+                // //... and tell Swagger to use those XML comments.
+                // c.IncludeXmlComments(xmlPath);
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.DtoParameters.Base;
 using Pang.RBAC.Api.Entities;
 using Pang.RBAC.Api.Repository.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pang.RBAC.Api.Controllers.Base
 {
@@ -73,7 +73,6 @@ namespace Pang.RBAC.Api.Controllers.Base
         /// <param name="id">Id</param>
         /// <returns>数据</returns>
         [HttpGet]
-        [Route("{id}")]
         public async Task<IActionResult> GetEntityByIdAsync(Guid id)
         {
             var data = await _repository.GetEntityByIdAsync(id);
@@ -89,8 +88,7 @@ namespace Pang.RBAC.Api.Controllers.Base
         /// <param name="ids">Id集合</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{ids}")]
-        public async Task<IActionResult> GetEntitiesCollectionAsync(IEnumerable<Guid> ids)
+        public async Task<IActionResult> GetEntitiesCollectionAsync([FromBody] IEnumerable<Guid> ids)
         {
             var entities = await _repository.GetEntitiesCollectionAsync(ids);
 
@@ -134,7 +132,6 @@ namespace Pang.RBAC.Api.Controllers.Base
         /// <param name="entity">更新的数据</param>
         /// <returns>更新后的数据</returns>
         [HttpPut]
-        [Route("{id}")]
         public async Task<IActionResult> UpdateEntityAsync(Guid id, [FromBody] TModel entity)
         {
             if (id == Guid.Empty)
@@ -182,7 +179,6 @@ namespace Pang.RBAC.Api.Controllers.Base
         /// <param name="id">要删除的数据的Id</param>
         /// <returns>删除的数据</returns>
         [HttpDelete]
-        [Route("{id}")]
         public async Task<IActionResult> DeleteEntityAsync(Guid id)
         {
             if (id == Guid.Empty)

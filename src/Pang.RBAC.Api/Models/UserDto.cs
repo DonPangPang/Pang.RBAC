@@ -1,17 +1,17 @@
-namespace Pang.RBAC.Api.Models
+ï»¿namespace Pang.RBAC.Api.Models
 {
     /// <summary>
-    /// ÓÃ»§
+    /// ç”¨æˆ·
     /// </summary>
     public partial class UserDto : BaseDto
     {
         /// <summary>
-        /// ÓÃ»§Ãû
+        /// ç”¨æˆ·å
         /// </summary>
         public string Username { get; set; }
 
         /// <summary>
-        /// ÃÜÂë
+        /// å¯†ç 
         /// </summary>
         public string Password { get; set; }
     }

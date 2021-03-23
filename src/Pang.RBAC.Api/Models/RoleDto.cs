@@ -1,12 +1,12 @@
-namespace Pang.RBAC.Api.Models
+ï»¿namespace Pang.RBAC.Api.Models
 {
     /// <summary>
-    /// ½ÇÉ«
+    /// è§’è‰²
     /// </summary>
     public class RoleDto : BaseDto
     {
         /// <summary>
-        /// ½ÇÉ«Ãû
+        /// è§’è‰²å
         /// </summary>
         public string Name { get; set; }
     }

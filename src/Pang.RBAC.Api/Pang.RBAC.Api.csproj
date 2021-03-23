@@ -4,7 +4,7 @@
     <UserSecretsId>6f2c71f0-be8c-4df2-a9dc-92c1c900fc65</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\Pang.RBAC.Api.XML</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
     <OutputPath>bin\Release\net5.0\publish\</OutputPath>
   </PropertyGroup>
   <ItemGroup>

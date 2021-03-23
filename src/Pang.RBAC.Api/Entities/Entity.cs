@@ -1,4 +1,5 @@
 using System;
+
 namespace Pang.RBAC.Api.Entities
 {
     /// <summary>
@@ -9,6 +10,6 @@ namespace Pang.RBAC.Api.Entities
         /// <summary>
         /// Id字段
         /// </summary>
-        public Guid Id{get; set;}
+        public Guid Id { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pang.RBAC.Api.Entities;
 using Pang.RBAC.Api.Extensions;
+using System;
 
 namespace Pang.RBAC.Api.Data
 {

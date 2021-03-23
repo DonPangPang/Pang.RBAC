@@ -1,19 +1,19 @@
-using System;
+锘縰sing System;
 
 namespace Pang.RBAC.Api.Models
 {
     /// <summary>
-    /// 角色和权限之间的关联
+    /// 瑙掕壊鍜屾潈闄愪箣闂寸殑鍏宠仈
     /// </summary>
     public class RolePermissionAssDto : BaseDto
     {
         /// <summary>
-        /// 角色Id
+        /// 瑙掕壊Id
         /// </summary>
         public Guid RoleId { get; set; }
 
         /// <summary>
-        /// 权限Id
+        /// 鏉冮檺Id
         /// </summary>
         public Guid PermissionId { get; set; }
     }
