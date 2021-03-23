@@ -2159,19 +2159,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pm011\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
+      "projectUniqueName": "E:\\LE-MyProject\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
       "projectName": "Pang.RBAC.Api",
-      "projectPath": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
-      "packagesPath": "C:\\Users\\pm011\\.nuget\\packages\\",
-      "outputPath": "f:\\LE-workspace\\Pang.RBAC\\src\\Pang.RBAC.Api\\obj\\",
+      "projectPath": "E:\\LE-MyProject\\Pang.RBAC\\src\\Pang.RBAC.Api\\Pang.RBAC.Api.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "E:\\LE-MyProject\\Pang.RBAC\\src\\Pang.RBAC.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pm011\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
