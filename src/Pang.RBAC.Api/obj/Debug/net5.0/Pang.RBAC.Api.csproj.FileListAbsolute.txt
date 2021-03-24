@@ -111,7 +111,6 @@ F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Release\net5.0\publish\net5.0\ru
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Release\net5.0\publish\net5.0\runtimes\win-arm64\native\e_sqlite3.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Release\net5.0\publish\net5.0\runtimes\win-x64\native\e_sqlite3.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Release\net5.0\publish\net5.0\runtimes\win-x86\native\e_sqlite3.dll
-F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.csprojAssemblyReference.cache
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.GeneratedMSBuildEditorConfig.editorconfig
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.AssemblyInfoInputs.cache
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.AssemblyInfo.cs
@@ -127,3 +126,5 @@ F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\ref\Pang.RBAC.Api.dll
 F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.pdb
 f:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.genruntimeconfig.cache
+F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\obj\Debug\net5.0\Pang.RBAC.Api.csprojAssemblyReference.cache
+F:\LE-workspace\Pang.RBAC\src\Pang.RBAC.Api\bin\Release\net5.0\publish\net5.0\Pang.RBAC.Api.XML

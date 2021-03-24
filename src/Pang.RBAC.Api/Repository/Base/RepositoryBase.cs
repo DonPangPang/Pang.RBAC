@@ -126,40 +126,130 @@ namespace Pang.RBAC.Api.Repository.Base
             _dbSet.Update(eneity);
         }
 
-        // TODO: 实现新添加的批量处理部分
-        Task IRepositoryBase<T>.AddEntity(T eneity)
+        public void AddEntities(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            foreach (var entity in entities)
+            {
+                AddEntity(entity);
+            }
         }
 
-        public Task AddEntities(IEnumerable<T> entities)
+        public void DeleteByIds(IEnumerable<Guid> ids)
         {
-            throw new NotImplementedException();
+            if (ids is null)
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
+            foreach (var id in ids)
+            {
+                DeleteById(id);
+            }
         }
 
-        Task IRepositoryBase<T>.Delete(T entity)
+        public void UpdateEntities(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            foreach (var entity in entities)
+            {
+                AddEntity(entity);
+            }
         }
 
-        Task IRepositoryBase<T>.DeleteById(Guid id)
+        public async Task AddEntityAsync(T entity)
         {
-            throw new NotImplementedException();
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            entity.Id = Guid.NewGuid();
+
+            await _dbSet.AddAsync(entity);
         }
 
-        public Task DeleteByIds(IEnumerable<Guid> ids)
+        public async Task AddEntitiesAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            foreach (var entity in entities)
+            {
+                await AddEntityAsync(entity);
+            }
         }
 
-        Task IRepositoryBase<T>.UpdateEntity(T eneity)
+        public async Task DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await Task.Run(() =>
+            {
+                _dbSet.Remove(entity);
+            });
         }
 
-        public Task UpdateEntities(IEnumerable<T> entities)
+        public async Task DeleteByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var entity = await GetEntityByIdAsync(id);
+            _dbSet.Remove(entity);
+        }
+
+        public async Task DeleteByIdsAsync(IEnumerable<Guid> ids)
+        {
+            if (ids is null)
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
+            foreach (var id in ids)
+            {
+                await DeleteByIdAsync(id);
+            }
+        }
+
+        public async Task UpdateEntityAsync(T entity)
+        {
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            await Task.Run(() =>
+            {
+                _dbSet.Update(entity);
+            });
+        }
+
+        public async Task UpdateEntitiesAsync(IEnumerable<T> entities)
+        {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            foreach (var entity in entities)
+            {
+                await UpdateEntityAsync(entity);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.DtoParameters.Base;
 using Pang.RBAC.Api.Entities;
+using Pang.RBAC.Api.Models;
 using Pang.RBAC.Api.Repository.Base;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Pang.RBAC.Api.Controllers.Base
     /// <typeparam name="TEntity">实体类型</typeparam>
     /// <typeparam name="TModel">模型类型</typeparam>
     public class MyControllerBase<TRepository, TEntity, TModel> : ControllerBase
-                where TRepository : RepositoryBase<TEntity> where TEntity : Entity
+                where TRepository : RepositoryBase<TEntity> where TEntity : Entity where TModel : BaseDto
     {
         private readonly TRepository _repository;
         private readonly IMapper _mapper;
@@ -88,7 +89,9 @@ namespace Pang.RBAC.Api.Controllers.Base
         /// <param name="ids">Id集合</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetEntitiesCollectionAsync([FromBody] IEnumerable<Guid> ids)
+        public async Task<IActionResult> GetEntitiesCollectionAsync(
+            [FromQuery]
+            IEnumerable<Guid> ids)
         {
             var entities = await _repository.GetEntitiesCollectionAsync(ids);
 
@@ -126,35 +129,52 @@ namespace Pang.RBAC.Api.Controllers.Base
         }
 
         /// <summary>
+        /// 创建很多条实体数据
+        /// </summary>
+        /// <param name="models">实体数据</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> CreateEntitiesAsync([FromBody] IEnumerable<TModel> models)
+        {
+            if (models is null)
+            {
+                throw new ArgumentNullException(nameof(models));
+            }
+
+            var entities = _mapper.Map<IEnumerable<TEntity>>(models);
+
+            await _repository.AddEntitiesAsync(entities);
+            await _repository.SaveAsync();
+
+            var returnDto = _mapper.Map<IEnumerable<TModel>>(entities);
+
+            return Ok(returnDto);
+        }
+
+        /// <summary>
         /// 更新一条实体的数据
         /// </summary>
-        /// <param name="id">要更新的数据的Id</param>
         /// <param name="entity">更新的数据</param>
         /// <returns>更新后的数据</returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateEntityAsync(Guid id, [FromBody] TModel entity)
+        public async Task<IActionResult> UpdateEntityAsync([FromBody] TModel model)
         {
-            if (id == Guid.Empty)
+            if (model is null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(model));
             }
 
-            if (entity is null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (!await _repository.EntityExistsAsync(id))
+            if (!await _repository.EntityExistsAsync(model.Id))
             {
                 return NotFound();
             }
 
-            var oldEntity = await _repository.GetEntityByIdAsync(id);
+            var oldEntity = await _repository.GetEntityByIdAsync(model.Id);
 
             if (oldEntity is null)
             {
-                var addEntity = _mapper.Map<TEntity>(entity);
-                addEntity.Id = id;
+                var addEntity = _mapper.Map<TEntity>(model);
+                addEntity.Id = model.Id;
 
                 _repository.AddEntity(addEntity);
 
@@ -165,12 +185,63 @@ namespace Pang.RBAC.Api.Controllers.Base
                 return Ok(dtoToReturn);
             }
 
-            _mapper.Map(entity, oldEntity);
+            _mapper.Map(model, oldEntity);
 
             _repository.UpdateEntity(oldEntity);
             await _repository.SaveAsync();
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// 更新多条实体数据
+        /// </summary>
+        /// <param name="models">实体数据的集合</param>
+        /// <returns>更新失败的数据</returns>
+        [HttpPut]
+        public async Task<IActionResult> UpdateEntitiesAsync([FromBody] IEnumerable<TModel> models)
+        {
+            if (models is null)
+            {
+                throw new ArgumentNullException(nameof(models));
+            }
+
+            var returnDto = new List<TModel>();
+
+            foreach (var model in models)
+            {
+                if (!await _repository.EntityExistsAsync(model.Id))
+                {
+                    returnDto.Add(model);
+                    continue;
+                }
+
+                var oldEntity = await _repository.GetEntityByIdAsync(model.Id);
+
+                if (oldEntity is null)
+                {
+                    var addEntity = _mapper.Map<TEntity>(model);
+                    addEntity.Id = model.Id;
+
+                    _repository.AddEntity(addEntity);
+
+                    await _repository.SaveAsync();
+
+                    var dtoToReturn = _mapper.Map<TModel>(addEntity);
+
+                    return Ok(dtoToReturn);
+                }
+
+                _mapper.Map(model, oldEntity);
+
+                _repository.UpdateEntity(oldEntity);
+                await _repository.SaveAsync();
+            }
+
+            return Ok(new
+            {
+                MissingModels = returnDto
+            });
         }
 
         /// <summary>
@@ -194,6 +265,37 @@ namespace Pang.RBAC.Api.Controllers.Base
             _repository.DeleteById(id);
             await _repository.SaveAsync();
             return NoContent();
+        }
+
+        /// <summary>
+        /// 删除很多条数据
+        /// </summary>
+        /// <param name="ids">id集合</param>
+        /// <returns>204</returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEntitiesAsync(IEnumerable<Guid> ids)
+        {
+            if (ids is null)
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
+            var returnDto = new List<Guid>();
+
+            foreach (var id in ids)
+            {
+                if (!await _repository.EntityExistsAsync(id))
+                {
+                    returnDto.Add(id);
+                }
+            }
+
+            await _repository.DeleteByIdsAsync(ids);
+            await _repository.SaveAsync();
+            return Ok(new
+            {
+                MissingIds = returnDto
+            });
         }
     }
 }

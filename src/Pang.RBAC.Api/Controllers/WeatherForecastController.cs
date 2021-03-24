@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +9,7 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize("Identify")]
+    [EnableCors("Any")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

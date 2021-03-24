@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.Controllers.Base;
 using Pang.RBAC.Api.Entities;
@@ -10,6 +11,7 @@ namespace Pang.RBAC.Api.Controllers
 {
     [ApiController]
     [Route("api/[Controller]/[Action]")]
+    [EnableCors("Any")]
     [Authorize("Identify")]
     public class FileResourceController : MyControllerBase<FileResourceRepository, FileResource, FileResourceDto>
     {

@@ -8,15 +8,22 @@ namespace Pang.RBAC.Api.Repository.Base
 {
     public interface IRepositoryBase<T> where T : class
     {
-        Task AddEntity(T eneity);
-        Task AddEntities(IEnumerable<T> entities);
+        void AddEntity(T eneity);
+        Task AddEntityAsync(T entity);
+        void AddEntities(IEnumerable<T> entities);
+        Task AddEntitiesAsync(IEnumerable<T> entities);
 
-        Task Delete(T entity);
-        Task DeleteById(Guid id);
-        Task DeleteByIds(IEnumerable<Guid> ids);
+        void Delete(T entity);
+        Task DeleteAsync(T entity);
+        void DeleteById(Guid id);
+        Task DeleteByIdAsync(Guid id);
+        void DeleteByIds(IEnumerable<Guid> ids);
+        Task DeleteByIdsAsync(IEnumerable<Guid> ids);
 
-        Task UpdateEntity(T eneity);
-        Task UpdateEntities(IEnumerable<T> entities);
+        void UpdateEntity(T eneity);
+        Task UpdateEntityAsync(T entity);
+        void UpdateEntities(IEnumerable<T> entities);
+        Task UpdateEntitiesAsync(IEnumerable<T> entities);
 
         Task<PagedList<T>> GetEntitiesAsync(DtoParametersBase parameter);
         Task<T> GetEntityByIdAsync(Guid id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Pang.RBAC.Api.Authorization;
@@ -17,6 +18,7 @@ namespace Pang.RBAC.Api.Controllers.Authorization
     /// </summary>
     [ApiController]
     [Route("[Controller]/[Action]")]
+    [EnableCors("Any")]
     public class AuthorizationController : ControllerBase
     {
         private PermissionRequirement _tokenParameter;

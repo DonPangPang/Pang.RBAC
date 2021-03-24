@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Pang.RBAC.Api.Controllers.Base;
 using Pang.RBAC.Api.Entities;
@@ -11,6 +12,7 @@ namespace Pang.RBAC.Api.Controllers
     [ApiController]
     [Route("api/[Controller]/[Action]")]
     [Authorize("Identify")]
+    [EnableCors("Any")]
     public class RoleController : MyControllerBase<RoleRepository, Role, RoleDto>
     {
         public RoleController(RoleRepository repository, IMapper mapper) : base(repository, mapper)
